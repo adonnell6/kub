@@ -116,8 +116,8 @@ def main():
         Tile(ORANGE, 4),
         Tile(RED, 7),
         Tile(BLACK, 4),
-        # Tile(BLUE, 13),
-        # Tile(BLUE, 9),
+        Tile(BLUE, 13),
+        Tile(BLUE, 9),
     ]
 
     existing_combos = solver.find_valid_combination(board_tiles)
