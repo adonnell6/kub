@@ -41,6 +41,31 @@ class TestRummikubSolver(unittest.TestCase):
             )
         )
 
+    def test_is_valid_set_with_wild(self):
+        self.assertTrue(
+            self.solver.is_valid_set(
+                [Tile(RED, 1), Tile(None, None, True), Tile(BLACK, 1)]
+            )
+        )
+
+        self.assertTrue(
+            self.solver.is_valid_set(
+                [Tile(RED, 1), Tile(None, None, True), Tile(None, None, True)]
+            )
+        )
+
+        self.assertTrue(
+            self.solver.is_valid_set(
+                [Tile(RED, 11), Tile(None, None, True), Tile(None, None, True)]
+            )
+        )
+
+        self.assertFalse(
+            self.solver.is_valid_set(
+                [Tile(RED, 11), Tile(None, None, True), Tile(BLACK, 2)]
+            )
+        )
+
     def test_is_valid_run(self):
         self.assertTrue(
             self.solver.is_valid_run(
@@ -73,6 +98,57 @@ class TestRummikubSolver(unittest.TestCase):
         self.assertFalse(
             self.solver.is_valid_run(
                 [Tile(RED, 1), Tile(BLACK, 2), Tile(BLUE, 3)]
+            )
+        )
+
+    def test_is_valid_run_with_wild(self):
+        self.assertTrue(
+            self.solver.is_valid_run(
+                [Tile(BLUE, 1), Tile(BLUE, 2), Tile(None, None, True)]
+            )
+        )
+
+        self.assertTrue(
+            self.solver.is_valid_run(
+                [Tile(BLUE, 1), Tile(BLUE, 3), Tile(None, None, True)]
+            )
+        )
+
+        self.assertTrue(
+            self.solver.is_valid_run(
+                [Tile(BLUE, 3), Tile(BLUE, 2), Tile(None, None, True)]
+            )
+        )
+
+        self.assertTrue(
+            self.solver.is_valid_run(
+                [
+                    Tile(BLUE, 3),
+                    Tile(BLUE, 2),
+                    Tile(None, None, True),
+                    Tile(BLUE, 4),
+                    Tile(BLUE, 5),
+                ]
+            )
+        )
+
+        self.assertTrue(
+            self.solver.is_valid_run(
+                [
+                    Tile(BLUE, 2),
+                    Tile(None, None, True),
+                    Tile(None, None, True),
+                ]
+            )
+        )
+
+        self.assertFalse(
+            self.solver.is_valid_run(
+                [
+                    Tile(BLUE, 2),
+                    Tile(BLUE, 5),
+                    Tile(None, None, True),
+                ]
             )
         )
 
@@ -188,6 +264,25 @@ class TestRummikubSolver(unittest.TestCase):
                 ]
             )
         )
+
+    def test_find_valid_combination_random_with_wild(self):
+        tiles = [
+            Tile(RED, 4),
+            Tile(BLACK, 4),
+            Tile(RED, 5),
+            Tile(BLACK, 5),
+            Tile(RED, 6),
+            Tile(BLACK, 6),
+            Tile(RED, 7),
+            Tile(RED, 8),
+        ]
+        for x in range(10):
+            tiles_copy = tiles.copy()
+            tiles_copy.pop(x % len(tiles_copy))
+            tiles_copy.append(Tile(None, None, True))
+            self.assertIsNotNone(
+                self.solver.find_valid_combination(tiles_copy)
+            )
 
 
 if __name__ == "__main__":
